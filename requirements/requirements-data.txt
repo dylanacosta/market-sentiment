@@ -1,0 +1,5 @@
+-r requirements-core.txt
+yfinance
+requests
+beautifulsoup4
+scipy

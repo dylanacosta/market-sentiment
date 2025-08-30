@@ -1,0 +1,6 @@
+-r requirements-app.txt
+-r requirements-data.txt
+pytest
+black
+flake8
+jupyterlab

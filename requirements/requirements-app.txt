@@ -1,0 +1,4 @@
+-r requirements-core.txt
+streamlit
+plotly
+matplotlib
