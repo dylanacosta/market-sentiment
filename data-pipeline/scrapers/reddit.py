@@ -14,6 +14,7 @@ def get_reddit_posts(subreddit_name="stocks", limit=10):
     
     Returns:
         list of dict: Each dict contains post title and score
+        Title: Title of the Reddit post
         Score: Number of upvotes minus downvotes
     """
     reddit = praw.Reddit(
