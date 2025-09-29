@@ -26,12 +26,12 @@ def run_pipeline(subreddit: str, limit: int, out_template: str) -> str:
         sent = analyzer.polarity_scores(text)
         rows.append({
             "subreddit": subreddit,
-            "title": text,
-            "score": p.get("score", None),
-            "sent_neg": sent["neg"],
-            "sent_neu": sent["neu"],
-            "sent_pos": sent["pos"],
-            "sent_compound": sent["compound"],
+            "title": text, # post title
+            "score": p.get("score", None), # upvotes - downvotes
+            "sent_neg": sent["neg"], # negative sentiment score
+            "sent_neu": sent["neu"], # neutral sentiment score
+            "sent_pos": sent["pos"], # positive sentiment score
+            "sent_compound": sent["compound"], # compound sentiment score
         })
 
     df = pd.DataFrame(rows)
