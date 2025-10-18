@@ -1,6 +1,7 @@
 import praw
 import os
 from dotenv import load_dotenv
+from datetime import datetime
 
 load_dotenv()
 
@@ -20,7 +21,8 @@ def fetch_reddit_posts(subreddit_name: str, limit: int = 50):
             "title": post.title,
             "score": post.score,
             "text": post.selftext,
-            "url": post.url
+            "url": post.url,
+            "scraped_at": datetime.now().isoformat()
         })
 
     print(f"Scraped {len(posts)} posts from r/{subreddit_name}")
