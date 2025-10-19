@@ -50,9 +50,39 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
+def run_scraper():
+    """Run the data pipeline to scrape new Reddit data."""
+    import subprocess
+    import sys
+    import os
+    
+    try:
+        # Run the main pipeline
+        result = subprocess.run([sys.executable, "main.py"], 
+                              capture_output=True, text=True, cwd=os.getcwd())
+        
+        if result.returncode == 0:
+            st.success("✅ Successfully scraped new data!")
+            st.info(f"Output: {result.stdout}")
+            return True
+        else:
+            st.error(f"❌ Scraping failed: {result.stderr}")
+            return False
+    except Exception as e:
+        st.error(f"❌ Error running scraper: {e}")
+        return False
+
 def main():
     st.title("📊 Market Sentiment Dashboard")
     st.markdown("Analyze Reddit sentiment data with interactive visualizations and filtering")
+    
+    # Add scraper button at the top
+    col1, col2, col3 = st.columns([1, 2, 1])
+    with col2:
+        if st.button("🔄 Scrape New Data", type="primary", use_container_width=True):
+            with st.spinner("Scraping Reddit data..."):
+                if run_scraper():
+                    st.rerun()  # Refresh the dashboard
     
     # Sidebar
     with st.sidebar:
