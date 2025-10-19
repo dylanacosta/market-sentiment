@@ -15,19 +15,20 @@ def check_virtual_env():
     return hasattr(sys, 'real_prefix') or (hasattr(sys, 'base_prefix') and sys.base_prefix != sys.prefix)
 
 def install_dependencies():
-    """Install required dependencies."""
-    print("📦 Installing dependencies...")
+    """Install required dependencies using the comprehensive checker."""
+    print("📦 Running comprehensive dependency check...")
     try:
-        subprocess.run([
-            sys.executable, "-m", "pip", "install", 
-            "-r", "requirements/requirements-core.txt",
-            "-r", "requirements/requirements-data.txt", 
-            "-r", "requirements/requirements-app.txt"
-        ], check=True)
-        print("✅ Dependencies installed successfully!")
-        return True
-    except subprocess.CalledProcessError as e:
-        print(f"❌ Failed to install dependencies: {e}")
+        # Run the dependency checker
+        result = subprocess.run([sys.executable, "check_dependencies.py"], 
+                              capture_output=True, text=True)
+        if result.returncode == 0:
+            print("✅ Dependencies checked and installed successfully!")
+            return True
+        else:
+            print(f"❌ Dependency check failed: {result.stderr}")
+            return False
+    except Exception as e:
+        print(f"❌ Error running dependency checker: {e}")
         return False
 
 def check_data():
